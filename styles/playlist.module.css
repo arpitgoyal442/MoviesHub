@@ -1,0 +1,211 @@
+/* styles/playlists.module.css */
+.container {
+    display: flex;
+    height: 100vh;
+    margin-top: 20px;
+  }
+  
+  .leftPanel {
+    width: 20vw;
+    height: 95%;
+    overflow-y: auto;
+    border-right: 1px solid #ccc;
+  }
+
+
+  .leftPanel li:hover{
+
+    color: teal;
+  }
+  
+  .leftPanel h1 {
+    padding: 10px;
+    font-size: 30px;
+    text-align: center;
+    color: rgb(75, 74, 74);
+    margin: 0;
+    /* border-bottom: 1px solid #ccc; */
+  }
+  
+  .leftPanel ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 50px;
+  }
+
+  
+  
+  .leftPanel li {
+    text-align: center;
+    color: rgb(75, 74, 74);
+    font-size: 30px;
+
+    padding: 5px;
+    margin: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  
+
+  .leftPanel img{
+
+    height: 30px;
+    width: auto
+    /* transition: transform 0.2s ease-in-out; */
+  }
+
+  
+ 
+
+  .listContainer{
+    display: flex;
+    flex-direction: row;
+    height: fit-content;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid gray;
+  }
+
+ 
+  
+  .rightPanel {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .rightPanel h1 {
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .playlistLink{
+
+    text-align: center;
+    padding: 10px;
+    /* border: 1px solid gray; */
+    background-color: teal;
+    color:white;
+    font-size: 20px;
+  }
+  
+  .moviesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .leftPanel button{
+
+    text-align: center;
+    color:white;
+    background-color: teal;
+    padding: 5px;
+    margin: 10px;
+    
+    font-size: 30px;
+    width: 60%;
+    font-weight: 400;
+
+    border: 0px;
+    
+  
+
+
+  }
+
+  .leftPanel input{
+    border:0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-bottom: 2px dashed gray;
+    font-size: 20px;
+    width: 90%;
+  }
+
+  .leftPanel label{
+
+    /* align-self: flex-end; */
+    display: flex;
+    
+    flex-direction: row;
+    font-size: 30px;
+    margin-top: 15px;
+
+    font-size: 20px;
+  }
+
+  .playlistform{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+    
+    /* border-bottom: 2px solid gainsboro; */
+    
+  }
+  
+
+  .leftPanel::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+  }
+  
+  .leftPanel::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 8px; /* Rounded corners for the thumb */
+  }
+  
+  .leftPanel::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar thumb on hover */
+  }
+  
+  .leftPanel::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color of the scrollbar track */
+    border-radius: 4px; /* Rounded corners for the track */
+  }
+
+
+  @media (max-width: 850px) {
+    .container{
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .leftPanel {
+      width: 100vw;
+      height: fit-content;
+      overflow-x: auto;
+      flex-direction: row;
+      border-right: 1px solid #ccc;
+    }
+    .leftPanel li{
+      width: 350px;
+      
+    }
+
+    .listContainer{
+
+      width: fit-content;
+     
+    }
+
+    .leftPanel img{
+      display: none;
+    }
+
+    .alllists{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
+  }

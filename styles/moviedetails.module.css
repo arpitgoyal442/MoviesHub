@@ -1,0 +1,169 @@
+/* styles/MovieDetails.module.css */
+
+.container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    
+    
+  }
+  
+  .movieDetails {
+    display: flex;
+    /* align-items: flex-start; */
+    padding: 30px;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
+  }
+  
+  .posterContainer img {
+    max-width: 300px;
+    height: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detailsContainer {
+    padding-left: 20px;
+    width: 70%;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  .info {
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 15px;
+    color: #777;
+  }
+  
+  .plot {
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 20px;
+    width:100% ;
+  }
+  
+  .director,
+  .writer,
+  .actors,
+  .rating {
+    font-size: 14px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  
+  .actors {
+    margin-bottom: 15px;
+  }
+  
+  .posterContainer {
+    margin-right: 20px;
+  }
+
+  .container button{
+    
+    
+    font-size: 20px;
+    background-color:teal;
+    color: white;
+    border: 0px;
+
+    
+    
+  }
+
+  .container button:hover{
+    cursor: pointer;
+    background-color: rgb(2, 110, 110);
+    
+    
+    /* color: rgb(40, 40, 40); */
+  }
+
+  .bplay{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .playlistBox{
+
+    width: 15vw;
+    height: 150px;
+    overflow-y: auto;
+    margin-top: 10px;
+
+  }
+
+  
+
+  .playlistBox li{
+
+    font-size: 20px;
+    margin: 5px;
+    padding: 10px;
+
+    border-bottom: 1px solid rgb(192, 190, 190);
+  }
+
+  .playlistBox li:hover{
+    cursor: pointer;
+    background-color: gainsboro;
+  }
+
+
+  
+  /* Add more styles as per your design preferences */
+  
+
+  .playlistBox::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+  }
+  
+  .playlistBox::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 8px; /* Rounded corners for the thumb */
+  }
+  
+  .playlistBox::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Color of the scrollbar thumb on hover */
+  }
+  
+  .playlistBox::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color of the scrollbar track */
+    border-radius: 4px; /* Rounded corners for the track */
+  }
+
+  @media (max-width: 850px) {
+    .container{
+      flex-direction: column-reverse;
+    }
+
+    .container button{
+      margin-top: 50px;
+    }
+
+    .movieDetails {
+      /* display: flex; */
+      align-items: center;
+      justify-content: center;
+     
+      padding: 30px;
+      flex-wrap: wrap;
+      
+    }
+
+    .playlistBox{
+
+      width: fit-content;
+      height: 150px;
+      overflow-y: auto;
+      margin-top: 10px;
+  
+    }
+  }

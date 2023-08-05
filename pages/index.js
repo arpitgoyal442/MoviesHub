@@ -1,115 +1,138 @@
+import React, { useState } from 'react';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/login.module.css';
+import Link from "next/link"
+import Image from 'next/image';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+function login() {
 
-export default function Home() {
+  const router=useRouter()
+
+  let URL=  process.env.NEXT_PUBLIC_SITE_URL
+
+  const [isSignin,setSignIn]=useState(true)
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+
+  const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+  const strongPasswordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+  
+
+
+  let handleButtonClick=()=>{
+
+    if(!emailRegex.test(email)){
+
+      alert("Enter a valid email")
+      return;
+    }
+
+    else if(!strongPasswordRegex.test(password)){
+      alert("Enter a strong Password:\n#lowercase\n#uppercase \n#Special character \n#Numeric digit")
+      return;
+    }
+
+
+    if(isSignin){
+
+      axios.post(`${URL}/api/auth/signin`,{email:email,password:password}).
+      then((data)=>{
+        console.log(data)
+        if(data.status==200){
+        console.log("Login Successfull")
+        localStorage.setItem("userid",data.data.id)
+        localStorage.setItem("jwt_token",data.data.jwt_token)
+        router.push('/home')
+        }
+        
+
+        if(data.status==401)
+        console.log("Incorrect email/password")
+      })
+      .catch((e)=>{console.log(e)})
+    }
+
+    else{
+
+      axios.post(`${URL}/api/auth/signup`,{email:email,password:password}).
+      then((data)=>{
+
+        console.log(data.data)
+        // if email already exists
+        if(data.status==226)
+        alert("Email already Exist")
+        else alert("Account Created Successfully")
+      })
+      .catch((e)=>{console.log(e)})
+
+
+    }
+
+
+
+
+    
+
+  }
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Movies Hub</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+      <main className={styles.main}>
 
+        
+      
+        <Image
+        src="/images/logo.png"
+        height={344}
+        width={344}
+        
+        />
+
+        
+        <div>
         <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
+          Movies details , Create public/private playlists and more...
         </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
         </div>
+
+        <div className={styles.toggle}>
+        <h2 onClick={()=>{setSignIn(true)}} className={isSignin?styles.primarytoggle:""}>Sign In</h2>
+        <h2 onClick={()=>{setSignIn(false)}} className={!isSignin?styles.primarytoggle:""} >Sign Up</h2>
+        </div>
+
+       
+
+        <div className={styles.form}>
+          <input type="text" placeholder='Email...' value={email} onChange={(e)=>{setEmail(e.target.value)}} />
+          <input  type="password" placeholder='Password...'   value={password} onChange={(e)=>{setPassword(e.target.value)}} />
+        </div>
+
+        
+
+       
+        <button onClick={handleButtonClick}  className={styles.primaryButton}> {isSignin?"Sign In":"SignUp"}</button>
+        
+        
       </main>
 
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
+      <footer className={styles.footer}>
+        <p>© 2023 RentWheelz. All rights reserved.</p>
       </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
     </div>
-  )
+  );
 }
+
+export default login;
+
+
+

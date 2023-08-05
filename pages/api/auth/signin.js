@@ -47,7 +47,7 @@ export default  async function signinHandler(req,res){
     let user= await User.findOne({email:email})
     
     if(user==null){
-        res.status(401).send("Account don't exist")
+        return res.status(401).send("Account don't exist")
     
     }
 
@@ -62,15 +62,15 @@ export default  async function signinHandler(req,res){
 
       if(isOk){
         let token=generateJwtToken(userid)
-      res.status(200).json({id:userid,jwt_token:token})
+       return res.status(200).json({id:userid,jwt_token:token})
       }
 
 
-      else res.status(401).send("Deny login");
+      else return res.status(401).send("Deny login");
 
      }).catch((err)=>{
       console.log(err);
-      res.status(500).send(err);
+       return res.status(500).send(err);
      })
 
     

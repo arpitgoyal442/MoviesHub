@@ -2,6 +2,7 @@ import { useState } from "react";
 import MovieCard from "../components/movieCard";
 import styles from "../styles/Home.module.css";
 import axios from "axios";
+import Loader from "../components/loader"
 
 export default function home({ data }) {
   const movies = data;
@@ -9,6 +10,10 @@ export default function home({ data }) {
 
   const [searchMovieName, setSearchMovieName] = useState("");
   const [searchMovie,setSearchMovie]=useState(null);
+
+  
+  const [loadermsg,setLoaderMsg]=useState("");
+  const [showloader,setShowLoader]=useState(false)
 
   function searchChange(e) {
     setSearchMovieName(e.target.value);
@@ -22,23 +27,36 @@ export default function home({ data }) {
 
   async function makeSearch() {
 
-    let movieName= encodeURIComponent(searchMovieName)
-    // let movies;
+    setLoaderMsg("Searching...")
+    setShowLoader(true)
 
+    let movieName= encodeURIComponent(searchMovieName)
     await axios
       .get(`https://omdbapi.com/?apikey=${api_key}&t=${movieName}`)
       .then((data) => {
         
+        if(data.data.Response!='False'){
         setSearchMovie(data.data)
+        setShowLoader(false)
+      }else{
+        setLoaderMsg("Not Found...")
+
+      }
         console.log(data)
       })
       .catch((e) => {
+
+        setLoaderMsg("Error Occured")
+
         console.log(e);
       });
+
+      setShowLoader(false)
   }
 
   return (
     <div className={styles.container}>
+      <Loader show={showloader} message={loadermsg}/>
       <div className={styles.search}>
         <input type="text" value={searchMovieName} onChange={searchChange} />
         <button onClick={makeSearch}>Search</button>

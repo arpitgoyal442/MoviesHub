@@ -4,6 +4,8 @@ import axios from "axios";
 import MovieCard from "../../components/movieCard";
 import styles from "../../styles/playlist.module.css";
 
+import Loader from "../../components/loader"
+
 const PlaylistPage = () => {
   const [newPlaylist, setNewPlaylist] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
@@ -13,11 +15,16 @@ const PlaylistPage = () => {
   const [playlists, setPlaylists] = useState([]);
   const [playlistLink,setPlaylistLink]=useState("");
 
+  const [loadermsg,setLoaderMsg]=useState("");
+  const [showloader,setShowLoader]=useState(false)
+
   let URL=  process.env.NEXT_PUBLIC_SITE_URL
 
   async function fetchPlaylists() {
     let jwt_token = localStorage.getItem("jwt_token");
     let userid = localStorage.getItem("userid");
+
+    
 
     // Get all the playlists of the user
 
@@ -52,18 +59,25 @@ const PlaylistPage = () => {
 
   async function createNewPlaylist() {
 
+    setLoaderMsg("Adding...")
+    setShowLoader(true)
+
     let jwt_token=localStorage.getItem("jwt_token")
     let userid=localStorage.getItem("userid")
 
     if(jwt_token==null || jwt_token==""||userid==null || userid=="")
     {
-      alert("Login Required")
+      setLoaderMsg("Login Required...")
+       setShowLoader(false)
+      
       return
     }
 
     if (newPlaylist == "") {
+      setLoaderMsg("Enter a valid name")
+       setShowLoader(false)
       console.log("Empty name not allowed");
-      return;
+      // return;
     } else {
       console.log("is Private is :" + isPrivate);
 
@@ -75,11 +89,15 @@ const PlaylistPage = () => {
         })
         .then((data) => {
           console.log(data);
+          setLoaderMsg("Added Successfully")
+            setShowLoader(false)
           setPlaylists((pre) => {
             return [...pre, data.data];
           });
         })
         .catch((e) => {
+          setLoaderMsg("Something went Wrong")
+          setShowLoader(false)
           console.log(e);
         });
     }
@@ -111,6 +129,7 @@ const PlaylistPage = () => {
 
   return (
     <div className={styles.container}>
+      <Loader message={loadermsg} show={showloader}/>
       <div className={styles.leftPanel}>
         <h1>Playlist Names</h1>
         <ul>
@@ -158,7 +177,7 @@ const PlaylistPage = () => {
       </div>
 
       <div className={styles.rightPanel}>
-      <p className={styles.playlistLink}>{playlistLink}</p>
+      {playlistLink!=""&&<p className={styles.playlistLink}>{playlistLink}</p>}
         <div className={styles.moviesContainer}>
           
           {movies.map((movie) => (

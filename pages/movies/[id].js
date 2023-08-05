@@ -4,13 +4,17 @@ import Head from 'next/head';
 
 import styles from '../../styles/moviedetails.module.css'; // Import the CSS file
 import axios from 'axios';
+import Loader from '../../components/loader';
 
 
 const MovieDetails = ({movieData}) => {
+  const [showloader,setShowLoader]=useState(false)
 
   let URL=  process.env.NEXT_PUBLIC_SITE_URL
 
-  const [playlists,setPlaylists]=useState([])
+  const [playlists,setPlaylists]=useState([]);
+  const [loadermsg,setLoaderMsg]=useState("");
+  
 
 
   const [showPlaylistSelector,setShowPlaylistSelector]=useState(false)
@@ -77,6 +81,9 @@ const MovieDetails = ({movieData}) => {
 
   async function playlistClicked(e){
 
+    setLoaderMsg("Adding...")
+    setShowLoader(true)
+
     let playlistid=e.target.getAttribute('value');
     setShowPlaylistSelector(false)
 
@@ -92,10 +99,17 @@ const MovieDetails = ({movieData}) => {
     await axios.post(`${URL}/api/playlist/${playlistid}`,data).then((data)=>{
 
     console.log(data)
+    setLoaderMsg("Added Successfully")
+    
 
     }).catch((e)=>{
+      setLoaderMsg("Something Went Wrong")
       console.log(errorToJSON)
     })
+
+
+
+    setShowLoader(false)
 
 
   }
@@ -103,10 +117,12 @@ const MovieDetails = ({movieData}) => {
 
   return (
     <div className={styles.container}>
+      <Loader show={showloader} message={loadermsg} />
       <Head>
         <title>{movieData.Title}</title>
       </Head>
 
+      
         
 
       <div className={styles.movieDetails}>

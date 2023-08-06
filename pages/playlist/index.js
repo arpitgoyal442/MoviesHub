@@ -68,6 +68,8 @@ const PlaylistPage = () => {
     if(jwt_token==null || jwt_token==""||userid==null || userid=="")
     {
       alert("Login Required")
+      setLoaderMsg("Login Required")
+      setShowLoader(false)
       
       return
     }

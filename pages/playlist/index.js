@@ -77,6 +77,8 @@ const PlaylistPage = () => {
     if (newPlaylist == "") {
       
       alert("Enter a Valid name")
+      setLoaderMsg("Enter a valid name")
+      
       console.log("Empty name not allowed");
       // return;
     } else {
@@ -119,7 +121,7 @@ const PlaylistPage = () => {
 
     let index = e.target.getAttribute("value");
 
-    let link= playlists[index].ispublic?`${URL}/playlist/${playlists[index]._id}`:"Private Playlist"
+    let link= `${URL}/playlist/${playlists[index]._id}`
 
     setPlaylistLink(link)
 

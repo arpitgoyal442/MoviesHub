@@ -94,7 +94,8 @@
   .playlistBox{
 
     width: 15vw;
-    height: 150px;
+    min-height: fit-content;
+    max-height: 150px;
     overflow-y: auto;
     margin-top: 10px;
 

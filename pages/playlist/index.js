@@ -67,15 +67,14 @@ const PlaylistPage = () => {
 
     if(jwt_token==null || jwt_token==""||userid==null || userid=="")
     {
-      setLoaderMsg("Login Required...")
-       setShowLoader(false)
+      alert("Login Required")
       
       return
     }
 
     if (newPlaylist == "") {
-      setLoaderMsg("Enter a valid name")
-       setShowLoader(false)
+      
+      alert("Enter a Valid name")
       console.log("Empty name not allowed");
       // return;
     } else {
@@ -90,17 +89,19 @@ const PlaylistPage = () => {
         .then((data) => {
           console.log(data);
           setLoaderMsg("Added Successfully")
-            setShowLoader(false)
+            // setShowLoader(false)
           setPlaylists((pre) => {
             return [...pre, data.data];
           });
         })
         .catch((e) => {
           setLoaderMsg("Something went Wrong")
-          setShowLoader(false)
+          
           console.log(e);
         });
     }
+
+    setShowLoader(false)
   }
 
   function handlePlaylistClicked(e) {
@@ -172,7 +173,7 @@ const PlaylistPage = () => {
             
           ))}
 
-</div>
+              </div>
         </ul>
       </div>
 

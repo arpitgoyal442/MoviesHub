@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import Head from 'next/head';
 
 import styles from '../../styles/moviedetails.module.css'; // Import the CSS file
@@ -14,6 +14,7 @@ const MovieDetails = ({movieData}) => {
 
   const [playlists,setPlaylists]=useState([]);
   const [loadermsg,setLoaderMsg]=useState("");
+  const buttonRef = useRef();
   
 
 
@@ -113,6 +114,15 @@ const MovieDetails = ({movieData}) => {
 
 
   }
+
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      setShowPlaylistSelector(false);
+    }
+  };
+
+  window.addEventListener('click', handleClickOutside);
+
   
 
   return (
@@ -152,14 +162,14 @@ const MovieDetails = ({movieData}) => {
       </div>
 
        <div className={styles.bplay}>
-      <button onClick={handleAddClicked}>Add to Playlist</button>
+      <button ref={buttonRef} onClick={handleAddClicked}>Add to Playlist</button>
       { showPlaylistSelector && <div className={styles.playlistBox}>
       <ul>
-      {playlists.map((playlist) => (
+      { playlists.length>0 ?  playlists.map((playlist) => (
         <li key={playlist._id} value={playlist._id} onClick={playlistClicked}>
           {playlist.name}
         </li>
-      ))}
+      )) : <p>No Playlist Found</p>}
     </ul>
         </div>}
       </div>
